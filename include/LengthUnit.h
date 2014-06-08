@@ -8,67 +8,72 @@
 #ifndef LENGTHUNIT_H_
 #define LENGTHUNIT_H_
 #include "typeDefine.h"
+#include <string>
+#include <iostream>
+#include <map>
 
-#define _amount_of_baseUnit_in_one_Mile _amount_of_baseUnit_in_one_Yard * 1760
-#define _amount_of_baseUnit_in_one_Yard _amount_of_baseUnit_in_one_Feet * 3
-#define _amount_of_baseUnit_in_one_Feet _amount_of_baseUnit_in_one_Inch * 12
-#define _amount_of_baseUnit_in_one_Inch 1
-
-#define _decl_lenth_get_unit(name)\
-	_decl_get_unit(Length, name)
-
-
-#define _impl_length_get_unit(name)\
-		_impl_get_unit(Length, name)
+#define _amount_of_baseUnit_in_one_MILE _amount_of_baseUnit_in_one_YARD * 1760
+#define _amount_of_baseUnit_in_one_YARD _amount_of_baseUnit_in_one_FEET * 3
+#define _amount_of_baseUnit_in_one_FEET _amount_of_baseUnit_in_one_INCH * 12
+#define _amount_of_baseUnit_in_one_INCH 1
 
 
-#define _get_unit_func(type, name)\
-	type##Unit::get##name()
+template <typename Unit>
+class TypeTable{
+public:
+	static TypeTable& getInstance(){
+		static TypeTable instance;
+		return instance;
+	}
+	void registType(unsigned int amountInBaseUnit, std::string typeName){
+		_types[amountInBaseUnit] = typeName;
+	}
+
+	void format(std::ostream& os, unsigned int amountsOfBaseUnit){
+		bool firstFlg = true;
+		for (reverse_iterator iter = _types.rbegin(); iter != _types.rend(); iter++){
+			size_t num = amountsOfBaseUnit / iter->first;
+			if (num){
+				if (!firstFlg){
+					os << " ";
+				}
+				firstFlg = false;
+				os << num << " " << iter->second;
+				amountsOfBaseUnit -= iter->first * num;
+			}
+		}
+	}
+private:
+	typedef std::map<unsigned int, std::string >::reverse_iterator reverse_iterator;
+	std::map<unsigned int, std::string > _types;
+};
 
 
-#define _decl_get_unit(type, name)\
-	const static type##Unit& get##name()\
-
-
-#define _impl_get_unit(type, name)\
-const type##Unit& _get_unit_func(type, name){\
-	static type##Unit unit(_amount_of_baseUnit_in_one_##name);\
-	return unit;\
-}
-
+#define _declared_func(typeName)\
+	static const LengthUnit& get##typeName()\
 
 class LengthUnit{
 public:
-	_decl_lenth_get_unit(Mile);
-	_decl_lenth_get_unit(Yard);
-	_decl_lenth_get_unit(Feet);
-	_decl_lenth_get_unit(Inch);
+	_declared_func(MILE);
+	_declared_func(YARD);
+	_declared_func(FEET);
+	_declared_func(INCH);
 
-	const static LengthUnit& getBaseUnit(){
-		return getInch();
-	}
+	static const LengthUnit& getBaseUnit();
 private:
-	LengthUnit(unsigned int amountsInBaseUnit):_amountsInBaseUnit(amountsInBaseUnit){
-
-	}
+	LengthUnit(unsigned int amountsInBaseUnit, std::string unitName);
 public:
-	Amount getAnmountInBaseUnit()const{
-		return _amountsInBaseUnit;
-	}
-
+	Amount getAnmountInBaseUnit() const;
+public:
+	static void format(std::ostream& os, unsigned int amountsOfBaseUnit);
 private:
 	unsigned int _amountsInBaseUnit;
 };
 
-_impl_length_get_unit(Mile)
-_impl_length_get_unit(Yard)
-_impl_length_get_unit(Feet)
-_impl_length_get_unit(Inch)
-
-#define MILE (LengthUnit::getMile())
-#define YARD (LengthUnit::getYard())
-#define FEET (LengthUnit::getFeet())
-#define INCH (LengthUnit::getInch())
+#define MILE (LengthUnit::getMILE())
+#define YARD (LengthUnit::getYARD())
+#define FEET (LengthUnit::getFEET())
+#define INCH (LengthUnit::getINCH())
 #define BASE_UNIT INCH
 
 #endif /* LENGTHUNIT_H_ */
