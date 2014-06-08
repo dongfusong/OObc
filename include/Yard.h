@@ -7,23 +7,18 @@
 
 #ifndef YARD_H_
 #define YARD_H_
+
 #include "typeDefine.h"
+#include "BaseUnit.h"
 
-class Yard {
+class Yard : public BaseUnit{
 public:
-	const static Amount amount_of_baseUnit = 1;
-	Yard(const Amount& val):_value(val * amount_of_baseUnit){
+	Yard(const Amount& val):BaseUnit(val){
 
 	}
-	bool operator==(const Yard& rhs) const{
-		return _value == rhs._value;
+	virtual Amount getAmountOfBaseUnit()const{
+			return 1;
 	}
-	bool operator!=(const Yard& rhs) const{
-		return !operator==(rhs);
-	}
-
-private:
-	Amount _value;
 };
 
 

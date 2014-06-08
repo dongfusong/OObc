@@ -8,17 +8,15 @@
 #ifndef MILE_H_
 #define MILE_H_
 #include "typeDefine.h"
+#include "BaseUnit.h"
 
-class Mile {
+class Mile : public BaseUnit{
 public:
-	const static Amount amount_of_baseUnit = 1760;
-	Mile(const Amount& val):_value(val * amount_of_baseUnit){
+	Mile(const Amount& val):BaseUnit(val){
 
 	}
-	bool operator==(const Mile& rhs) const;
-	bool operator!=(const Mile& rhs) const;
-
-private:
-	Amount _value;
+	virtual Amount getAmountOfBaseUnit()const{
+		return 1760;
+	}
 };
 #endif /* MILE_H_ */

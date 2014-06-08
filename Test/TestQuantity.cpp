@@ -6,6 +6,7 @@
  */
 
 #include <gtest/gtest.h>
+#include "baseUnit.h"
 #include "mile.h"
 #include "yard.h"
 

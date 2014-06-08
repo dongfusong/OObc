@@ -7,11 +7,25 @@
 
 #ifndef BASEUNIT_H_
 #define BASEUNIT_H_
+#include "typeDefine.h"
 class BaseUnit {
 public:
-	BaseUnit(){}
+	BaseUnit(const Amount& value):_value(value){}
+	virtual Amount getAmountOfBaseUnit()const = 0;
 
-private:
+	Amount getAmountInBaseUnit()const{
+		return _value * getAmountOfBaseUnit();
+	}
+
+	bool operator==(const BaseUnit& rhs) const{
+		return getAmountInBaseUnit() == rhs.getAmountInBaseUnit();
+	}
+	bool operator!=(const BaseUnit& rhs) const{
+		return !operator==(rhs);
+	}
+	virtual ~BaseUnit(){}
+protected:
+	Amount _value;
 };
 
 
