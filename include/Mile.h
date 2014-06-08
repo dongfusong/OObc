@@ -7,15 +7,18 @@
 
 #ifndef MILE_H_
 #define MILE_H_
+
+typedef unsigned int Amount;
+
 class Mile {
 public:
-	Mile(int val):_value(val){
+	Mile(const Amount& val):_value(val){
 
 	}
 	bool operator ==(const Mile& rhs) const;
 	bool operator !=(const Mile& rhs) const;
 
 private:
-	int _value;
+	Amount _value;
 };
 #endif /* MILE_H_ */
