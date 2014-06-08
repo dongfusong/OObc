@@ -6,9 +6,7 @@
  */
 
 #include <gtest/gtest.h>
-#include "baseUnit.h"
-#include "mile.h"
-#include "yard.h"
+#include "length.h"
 
 class TestQuantity: public testing::Test {
 public:
@@ -32,7 +30,29 @@ TEST_F(TestQuantity, 3_mile_not_equal_2_mile)
 }
 
 
-TEST_F(TestQuantity, 3_yard_equal_3_yard){
+TEST_F(TestQuantity, test_yard_operator_equal_and_nequal){
 	EXPECT_TRUE(Yard(3) == Yard(3));
 	EXPECT_TRUE(Yard(3) != Yard(4));
 }
+
+TEST_F(TestQuantity, 1760yard_equal_1mile){
+
+	EXPECT_TRUE(Yard(1760) == Mile(1));
+}
+
+TEST_F(TestQuantity, 1Yard_equal_3Feet)
+{
+	EXPECT_TRUE(Yard(1) == Feet(3));
+}
+
+TEST_F(TestQuantity, 1Feet_equal_12inch)
+{
+	EXPECT_TRUE(Inch(12) == Feet(1));
+}
+
+TEST_F(TestQuantity, 13Inch_add_11Inch_equal_2feet)
+{
+	EXPECT_EQ(Feet(2), Inch(13) + Inch(11));
+}
+
+
