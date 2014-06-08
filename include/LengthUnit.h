@@ -16,7 +16,12 @@
 #include "typeDefine.h"
 
 class LengthUnit{
-
+public:
+	const static LengthUnit& getMile();
+	const static LengthUnit& getYard();
+	const static LengthUnit& getFeet();
+	const static LengthUnit& getInch();
+private:
 	LengthUnit(unsigned int amountsInBaseUnit):_amountsInBaseUnit(amountsInBaseUnit){
 
 	}
@@ -24,39 +29,36 @@ public:
 	Amount getAnmountInBaseUnit()const{
 		return _amountsInBaseUnit;
 	}
-	friend const LengthUnit& getMile();
-	friend const LengthUnit& getYard();
-	friend const LengthUnit& getFeet();
-	friend const LengthUnit& getInch();
+
 private:
 	unsigned int _amountsInBaseUnit;
 };
 
-const LengthUnit& getMile(){
+const LengthUnit& LengthUnit::getMile(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_mile);
 	return unit;
 }
 
-const LengthUnit& getYard(){
+const LengthUnit& LengthUnit::getYard(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_yard);
 	return unit;
 }
 
-const LengthUnit& getFeet(){
+const LengthUnit& LengthUnit::getFeet(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_feet);
 	return unit;
 }
 
-const LengthUnit& getInch(){
+const LengthUnit& LengthUnit::getInch(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_inch);
 	return unit;
 }
 
 
-#define MILE getMile()
-#define YARD getYard()
-#define FEET getFeet()
-#define INCH getInch()
+#define MILE (LengthUnit::getMile())
+#define YARD (LengthUnit::getYard())
+#define FEET (LengthUnit::getFeet())
+#define INCH (LengthUnit::getInch())
 #define BASE_UNIT INCH
 
 #endif /* LENGTHUNIT_H_ */

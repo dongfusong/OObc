@@ -18,7 +18,6 @@ public:
 	Amount getAmountInBaseUnit()const{
 		return _value * _unit.getAnmountInBaseUnit();
 	}
-
 	bool operator==(const Length& rhs) const{
 		return getAmountInBaseUnit() == rhs.getAmountInBaseUnit();
 	}
