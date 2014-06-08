@@ -16,33 +16,38 @@
 #include "typeDefine.h"
 
 class LengthUnit{
-public:
+
 	LengthUnit(unsigned int amountsInBaseUnit):_amountsInBaseUnit(amountsInBaseUnit){
 
 	}
+public:
 	Amount getAnmountInBaseUnit()const{
 		return _amountsInBaseUnit;
 	}
+	friend const LengthUnit& getMile();
+	friend const LengthUnit& getYard();
+	friend const LengthUnit& getFeet();
+	friend const LengthUnit& getInch();
 private:
 	unsigned int _amountsInBaseUnit;
 };
 
-static LengthUnit getMile(){
+const LengthUnit& getMile(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_mile);
 	return unit;
 }
 
-static LengthUnit getYard(){
+const LengthUnit& getYard(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_yard);
 	return unit;
 }
 
-static LengthUnit getFeet(){
+const LengthUnit& getFeet(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_feet);
 	return unit;
 }
 
-static LengthUnit getInch(){
+const LengthUnit& getInch(){
 	static LengthUnit unit(_amount_of_baseUnit_in_one_inch);
 	return unit;
 }
