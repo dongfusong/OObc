@@ -7,16 +7,16 @@
 
 #ifndef MILE_H_
 #define MILE_H_
-
-typedef unsigned int Amount;
+#include "typeDefine.h"
 
 class Mile {
 public:
-	Mile(const Amount& val):_value(val){
+	const static Amount amount_of_baseUnit = 1760;
+	Mile(const Amount& val):_value(val * amount_of_baseUnit){
 
 	}
-	bool operator ==(const Mile& rhs) const;
-	bool operator !=(const Mile& rhs) const;
+	bool operator==(const Mile& rhs) const;
+	bool operator!=(const Mile& rhs) const;
 
 private:
 	Amount _value;
