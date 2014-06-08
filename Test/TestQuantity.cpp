@@ -8,6 +8,7 @@
 #include <gtest/gtest.h>
 #include "length.h"
 
+
 class TestQuantity: public testing::Test {
 public:
 	void setUp() {
