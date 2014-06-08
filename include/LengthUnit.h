@@ -13,10 +13,45 @@
 #define _amount_of_baseUnit_in_one_feet _amount_of_baseUnit_in_one_inch * 12
 #define _amount_of_baseUnit_in_one_inch 1
 
-#define MILE _amount_of_baseUnit_in_one_mile
-#define YARD _amount_of_baseUnit_in_one_yard
-#define FEET _amount_of_baseUnit_in_one_feet
-#define INCH _amount_of_baseUnit_in_one_inch
+#include "typeDefine.h"
+
+class LengthUnit{
+public:
+	LengthUnit(unsigned int amountsInBaseUnit):_amountsInBaseUnit(amountsInBaseUnit){
+
+	}
+	Amount getAnmountInBaseUnit()const{
+		return _amountsInBaseUnit;
+	}
+private:
+	unsigned int _amountsInBaseUnit;
+};
+
+static LengthUnit getMile(){
+	static LengthUnit unit(_amount_of_baseUnit_in_one_mile);
+	return unit;
+}
+
+static LengthUnit getYard(){
+	static LengthUnit unit(_amount_of_baseUnit_in_one_yard);
+	return unit;
+}
+
+static LengthUnit getFeet(){
+	static LengthUnit unit(_amount_of_baseUnit_in_one_feet);
+	return unit;
+}
+
+static LengthUnit getInch(){
+	static LengthUnit unit(_amount_of_baseUnit_in_one_inch);
+	return unit;
+}
+
+
+#define MILE getMile()
+#define YARD getYard()
+#define FEET getFeet()
+#define INCH getInch()
 #define BASE_UNIT INCH
 
 #endif /* LENGTHUNIT_H_ */

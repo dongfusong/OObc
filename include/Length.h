@@ -12,11 +12,11 @@
 
 class Length {
 public:
-	Length(const Amount& value, unsigned int amountsOfBaseUnit)
-	:_value(value),_amountsOfBaseUnit(amountsOfBaseUnit){}
+	Length(const Amount& value, LengthUnit unit)
+	:_value(value),_unit(unit){}
 
 	Amount getAmountInBaseUnit()const{
-		return _value * _amountsOfBaseUnit;
+		return _value * _unit.getAnmountInBaseUnit();
 	}
 
 	bool operator==(const Length& rhs) const{
@@ -30,12 +30,11 @@ public:
 		Amount sum = rhs1.getAmountInBaseUnit() + rhs2.getAmountInBaseUnit();
 		return Length(sum, BASE_UNIT);
 	}
-
 	virtual ~Length(){}
 
 protected:
 	Amount _value;
-	unsigned int _amountsOfBaseUnit;
+	LengthUnit _unit;
 };
 
 
