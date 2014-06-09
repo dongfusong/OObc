@@ -42,8 +42,8 @@ public:
 	Amount getAnmountInBaseUnit() const;
 	typedef OrderdUnits<LengthUnit, LessThan> OrderdLengthUnits;
 
-	static OrderdLengthUnits& getOrderdLengthUnits(){
-		return _orderdUnits;
+	static void visitAllUnits(Visitor* visitor){
+		_orderdUnits.accept(visitor);
 	}
 
 	friend std::ostream& operator<< (std::ostream& os, const LengthUnit& unit){

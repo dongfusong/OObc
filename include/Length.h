@@ -45,9 +45,10 @@ public:
 
 	}
 
-	friend const std::ostream& operator<<(std::ostream& os, const Length& rhs){
+	friend const std::ostream& operator<<(std::ostream& os, const Length& rhs)
+	{
 		Formatter formatter(os, rhs.getAmountInBaseUnit());
-		LengthUnit::getOrderdLengthUnits().accept(&formatter);
+		LengthUnit::visitAllUnits(&formatter);
 		return os;
 	}
 };
