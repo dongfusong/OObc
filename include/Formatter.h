@@ -4,22 +4,24 @@
  *  Created on: 2014Äê6ÔÂ9ÈÕ
  *      Author: Thoughtworks
  */
-
 #ifndef FORMATTER_H_
 #define FORMATTER_H_
 #include <ostream>
 #include "visitor.h"
+#include "LengthUnit.h"
 
 class Formatter: public Visitor {
 public:
 	Formatter():_os(NULL), _totalAmount(0){
 
 	}
-	void setInfo(std::ostream* os, size_t totalAmount){
+
+	void format(std::ostream* os, size_t totalAmount)
+	{
 		_os = os;
 		_totalAmount = totalAmount;
+		LengthUnit::visitAllUnits(this);
 	}
-
 	virtual bool visit(const LengthUnit& unit) = 0;
 protected:
 	std::ostream* _os;

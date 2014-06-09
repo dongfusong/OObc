@@ -21,8 +21,7 @@ public:
 
 	void format(std::ostream& os, Formatter& formatter)const
 	{
-		formatter.setInfo(&os, getAmountInBaseUnit());
-		LengthUnit::visitAllUnits(&formatter);
+		formatter.format(&os, getAmountInBaseUnit());
 	}
 
 };
