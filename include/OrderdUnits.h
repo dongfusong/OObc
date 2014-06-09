@@ -22,7 +22,9 @@ public:
 	{
 		for (size_t i = 0; i < _units.size(); i++)
 		{
-			visitor->visit(_units[i]);
+			if (false == visitor->visit(_units[i])){
+				return;
+			}
 		}
 	}
 private:

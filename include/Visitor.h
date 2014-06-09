@@ -10,7 +10,7 @@
 class LengthUnit;
 class Visitor{
 public:
-	virtual void visit(const LengthUnit& unit) = 0;
+	virtual bool visit(const LengthUnit& unit) = 0;
 	virtual ~Visitor() {
 
 	}

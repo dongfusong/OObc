@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 #include "length.h"
 #include <sstream>
+#include "FormatLength.h"
+
 using namespace std;
 
 class TestQuantity: public testing::Test {
@@ -60,32 +62,41 @@ TEST_F(TestQuantity, 13Inch_add_11Inch_equal_2feet)
 TEST_F(TestQuantity, output_quantity_14inch)
 {
 	ostringstream os;
-	os << Inch(14);
+	MultiFormatter formatter;
+	os << FormatLength(Inch(14), formatter);
 	EXPECT_EQ("1 FEET 2 INCH", os.str());
 }
-
 
 TEST_F(TestQuantity, output_quantity_24inch)
 {
 	ostringstream os;
-	os.clear();
-	os << Inch(24);
+	MultiFormatter formatter;
+	os << FormatLength(Inch(24), formatter);
 	EXPECT_EQ("2 FEET", os.str());
 }
+
 TEST_F(TestQuantity, output_quantity_39inch)
 {
 	ostringstream os;
-	os << Inch(39);
+	MultiFormatter formatter;
+	os << FormatLength(Inch(39), formatter);
 	EXPECT_EQ("1 YARD 3 INCH", os.str());
 }
-
 
 TEST_F(TestQuantity, output_quantity_1762yard)
 {
 	ostringstream os;
-	os << Yard(1762);
+	MultiFormatter formatter;
+	os << FormatLength(Yard(1762), formatter);
 	EXPECT_EQ("1 MILE 2 YARD", os.str());
 }
 
+
+TEST_F(TestQuantity, output_qunatity_2feet_equal_24inch){
+	ostringstream os;
+	SingleUnitFormatter formatter;
+	os << FormatLength(Feet(2), formatter);
+	EXPECT_EQ("24 INCH", os.str());
+}
 
 

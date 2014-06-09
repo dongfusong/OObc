@@ -11,46 +11,20 @@
 #include "typeDefine.h"
 #include "LengthUnit.h"
 #include "Quantity.h"
+#include "Formatter.h"
 
 class Length : public Quantity<LengthUnit>{
 public:
-
-	class Formatter : public Visitor{
-	public:
-		Formatter(std::ostream& os, size_t totalAmount):_os(os),_totalAmount(totalAmount),firstFlg(true){
-
-		}
-		void visit(const LengthUnit& unit){
-			if (_totalAmount == 0 && firstFlg){
-				_os << "0" << " " << LengthUnit::getBaseUnit();
-				return;
-			}
-			size_t num = _totalAmount / unit.getAnmountInBaseUnit();
-			if (num != 0){
-				if (!firstFlg){
-					_os << " ";
-				}
-				_os << num << " " << unit;
-				firstFlg = false;
-				_totalAmount %= unit.getAnmountInBaseUnit();
-			}
-		}
-	private:
-		std::ostream& _os;
-		size_t _totalAmount;
-		bool firstFlg;
-	};
-
 	Length(const Amount& value, const LengthUnit& unit):Quantity<LengthUnit>(value, unit){
 
 	}
 
-	friend const std::ostream& operator<<(std::ostream& os, const Length& rhs)
+	void format(std::ostream& os, Formatter& formatter)const
 	{
-		Formatter formatter(os, rhs.getAmountInBaseUnit());
+		formatter.setInfo(&os, getAmountInBaseUnit());
 		LengthUnit::visitAllUnits(&formatter);
-		return os;
 	}
+
 };
 
 #define Mile(value) Length(value, MILE)
