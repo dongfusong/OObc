@@ -6,23 +6,22 @@
  */
 #include "LengthUnit.h"
 
+
+LengthUnit::OrderdLengthUnits LengthUnit::_orderdUnits;
+
 const LengthUnit& LengthUnit::getBaseUnit() {
 	return getINCH();
 }
 
 LengthUnit::LengthUnit(unsigned int amountsInBaseUnit, std::string unitName) :
-		_amountsInBaseUnit(amountsInBaseUnit) {
-	TypeTable<LengthUnit>::getInstance().registType(amountsInBaseUnit,
-			unitName);
+		_amountsInBaseUnit(amountsInBaseUnit),_unitName(unitName) {
+	_orderdUnits.addUnit(*this);
 }
 
 Amount LengthUnit::getAnmountInBaseUnit() const {
 	return _amountsInBaseUnit;
 }
 
-void LengthUnit::format(std::ostream& os, unsigned int amountsOfBaseUnit) {
-	TypeTable<LengthUnit>::getInstance().format(os, amountsOfBaseUnit);
-}
 
 #define _impl_get_func(typeName)\
 		const LengthUnit& LengthUnit::get##typeName() {\

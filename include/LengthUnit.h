@@ -10,49 +10,25 @@
 #include "typeDefine.h"
 #include <string>
 #include <iostream>
-#include <map>
+#include "OrderdUnits.h"
 
 #define _amount_of_baseUnit_in_one_MILE _amount_of_baseUnit_in_one_YARD * 1760
 #define _amount_of_baseUnit_in_one_YARD _amount_of_baseUnit_in_one_FEET * 3
 #define _amount_of_baseUnit_in_one_FEET _amount_of_baseUnit_in_one_INCH * 12
 #define _amount_of_baseUnit_in_one_INCH 1
 
-
-template <typename Unit>
-class TypeTable{
-public:
-	static TypeTable& getInstance(){
-		static TypeTable instance;
-		return instance;
-	}
-	void registType(unsigned int amountInBaseUnit, std::string typeName){
-		_types[amountInBaseUnit] = typeName;
-	}
-
-	void format(std::ostream& os, unsigned int amountsOfBaseUnit){
-		bool firstFlg = true;
-		for (reverse_iterator iter = _types.rbegin(); iter != _types.rend(); iter++){
-			size_t num = amountsOfBaseUnit / iter->first;
-			if (num){
-				if (!firstFlg){
-					os << " ";
-				}
-				firstFlg = false;
-				os << num << " " << iter->second;
-				amountsOfBaseUnit -= iter->first * num;
-			}
-		}
-	}
-private:
-	typedef std::map<unsigned int, std::string >::reverse_iterator reverse_iterator;
-	std::map<unsigned int, std::string > _types;
-};
-
-
 #define _declared_func(typeName)\
 	static const LengthUnit& get##typeName()\
 
+
 class LengthUnit{
+public:
+	class LessThan{
+	public:
+		bool operator()(const LengthUnit& unit1, const LengthUnit& unit2){
+			return unit1.getAnmountInBaseUnit() > unit2.getAnmountInBaseUnit();
+		}
+	};
 public:
 	_declared_func(MILE);
 	_declared_func(YARD);
@@ -64,10 +40,21 @@ private:
 	LengthUnit(unsigned int amountsInBaseUnit, std::string unitName);
 public:
 	Amount getAnmountInBaseUnit() const;
-public:
-	static void format(std::ostream& os, unsigned int amountsOfBaseUnit);
+	typedef OrderdUnits<LengthUnit, LessThan> OrderdLengthUnits;
+
+	static OrderdLengthUnits& getOrderdLengthUnits(){
+		return _orderdUnits;
+	}
+
+	friend std::ostream& operator<< (std::ostream& os, const LengthUnit& unit){
+		os << unit._unitName;
+		return os;
+	}
 private:
 	unsigned int _amountsInBaseUnit;
+	std::string _unitName;
+
+	static OrderdUnits<LengthUnit, LessThan> _orderdUnits;
 };
 
 #define MILE (LengthUnit::getMILE())
