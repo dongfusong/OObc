@@ -42,7 +42,7 @@ public:
 	Amount getAnmountInBaseUnit() const;
 	typedef OrderdUnits<LengthUnit, LessThan> OrderdLengthUnits;
 
-	static void visitAllUnits(Visitor* visitor){
+	static void visitUnits(Visitor* visitor){
 		_orderdUnits.accept(visitor);
 	}
 

@@ -20,7 +20,7 @@ public:
 	{
 		_os = os;
 		_totalAmount = totalAmount;
-		LengthUnit::visitAllUnits(this);
+		LengthUnit::visitUnits(this);
 	}
 	virtual bool visit(const LengthUnit& unit) = 0;
 protected:
